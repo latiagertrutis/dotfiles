@@ -6,8 +6,8 @@
 
 /* global settings and color variables */
 * {
-   maincolor:        #ed8712;
-   highlight:        bold #ed8712;
+   maincolor:        #d99036;
+   highlight:        bold #d99036;
    urgentcolor:      #e53714;
 
    fgwhite:          #cfcfcf;
@@ -17,7 +17,7 @@
    blackselect:      #303030;
    darkgray:         #848484;
    scrollbarcolor:   #505050;
-   font: "DejaVu Sans Mono Regular 14";
+   font: "Free Mono 16";
    background-color: @blackdarkest;
 }
 
