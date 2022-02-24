@@ -30,4 +30,4 @@ fi
 
 setxkbmap -option caps:ctrl_modifier
 
-feh --bg-scale ~/Pictures/background.jpg 
+feh --bg-scale --randomize ~/.wallpaper/*
