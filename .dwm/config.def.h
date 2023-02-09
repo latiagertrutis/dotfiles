@@ -2,6 +2,9 @@
 
 /* appearance */
 static const unsigned int borderpx  = 7;        /* border pixel of windows */
+static const unsigned int igappx    = 5;        /* size of inner gaps */
+static const unsigned int ogappx    = 5;        /* size of outer gaps */
+static const int gapsforone	        = 0;	    /* 1 enable gaps when only one window is open */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -46,7 +49,6 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] =
 {
 	/* symbol     arrange function */
-	{ "[+]",      tatami },
 	{ "[]=",      tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
@@ -78,7 +80,7 @@ static Key keys[] =
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = rofisshcmd } },
-	{ MODKEY | ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY | ShiftMask,           XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -86,7 +88,13 @@ static Key keys[] =
 	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
-	{ MODKEY | ShiftMask,             XK_c,      killclient,     {0} },
+	{ MODKEY | ShiftMask,           XK_c,      killclient,     {0} },
+	{ MODKEY | ShiftMask,             XK_i,      setigaps,       {.i = +2 } },
+	{ MODKEY | ControlMask,           XK_i,      setigaps,       {.i = -2 } },
+	{ MODKEY | ShiftMask | ControlMask, XK_i,      setigaps,       {.i = 0  } },
+	{ MODKEY | ShiftMask,             XK_o,      setogaps,       {.i = +2 } },
+	{ MODKEY | ControlMask,           XK_o,      setogaps,       {.i = -2 } },
+	{ MODKEY | ShiftMask | ControlMask, XK_o,      setogaps,       {.i = 0  } },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -96,7 +104,8 @@ static Key keys[] =
 	TILEKEYS(MODKEY | ControlMask,                               0, 0, 1)
 	TILEKEYS(MODKEY | ShiftMask | ControlMask,                     1, 1, 1)
 	{
-		MODKEY | ShiftMask,             XK_t,      setdirs,        {
+		MODKEY | ShiftMask,             XK_t,      setdirs,
+		{
 			.v = (int[])
 			{
 				DirHor, DirVer, DirVer

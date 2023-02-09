@@ -147,6 +147,7 @@ struct Monitor
 	int by;               /* bar geometry */
 	int mx, my, mw, mh;   /* screen size */
 	int wx, wy, ww, wh;   /* window area  */
+	int igappx, ogappx;   /* inner and outer gaps */
 	unsigned int seltags;
 	unsigned int sellt;
 	unsigned int tagset[2];
@@ -234,6 +235,8 @@ static void setdirs(const Arg * arg);
 static void setfacts(const Arg * arg);
 static void setfocus(Client * c);
 static void setfullscreen(Client * c, int fullscreen);
+static void setigaps(const Arg *arg);
+static void setogaps(const Arg *arg);
 static void setlayout(const Arg * arg);
 static void setup(void);
 static void seturgent(Client * c, int urg);
@@ -873,6 +876,8 @@ createmon(void)
 	m->nmaster = nmaster;
 	m->showbar = showbar;
 	m->topbar = topbar;
+	m->igappx = igappx;
+	m->ogappx = ogappx;
 	m->lt[0] = &layouts[0];
 	m->lt[1] = &layouts[1 % LENGTH(layouts)];
 	strncpy(m->ltsymbol, layouts[0].symbol, sizeof m->ltsymbol);
@@ -2001,6 +2006,26 @@ setfullscreen(Client * c, int fullscreen)
 }
 
 void
+setigaps(const Arg *arg)
+{
+	if ((arg->i == 0) || (selmon->igappx + arg->i < 0))
+		selmon->igappx = 0;
+	else
+		selmon->igappx += arg->i;
+	arrange(selmon);
+}
+
+void
+setogaps(const Arg *arg)
+{
+	if ((arg->i == 0) || (selmon->ogappx + arg->i < 0))
+		selmon->ogappx = 0;
+	else
+		selmon->ogappx += arg->i;
+	arrange(selmon);
+}
+
+void
 setlayout(const Arg * arg)
 {
 	if (!arg || !arg->v || arg->v != selmon->lt[selmon->sellt])
@@ -2195,7 +2220,7 @@ tile(Monitor * m)
 	Client * c;
 
 	Area * ga = m->pertag->areas[m->pertag->curtag], *ma = ga + 1, *sa = ga + 2, *a;
-	unsigned int n, i, w, h, ms, ss;
+	unsigned int n, i, w, h, g, ms, ss;
 	float f;
 
 	/* print layout symbols */
@@ -2216,28 +2241,34 @@ tile(Monitor * m)
 	{
 		return;
 	}
+	if(n == 1 && gapsforone == 0){
+		c = nexttiled(m->clients);
+		resize(c, m->wx, m->wy, m->ww - 2 * c->bw, m->wh - 2 * c->bw, 0);
+		return;
+	}
 
 	ma->n = MIN(n, m->nmaster), sa->n = n - ma->n;
 	/* calculate area rectangles */
 	f = ma->n == 0 ? 0 : (sa->n == 0 ? 1 : ga->fact / 2);
+	g = ma->n == 0 || sa->n == 0 ? 0 : m->igappx;
 	if (ga->dir == DirHor || ga->dir == DirRotHor)
-		ms = f * m->ww, ss = m->ww - ms,
-		ma->x = ga->dir == DirHor ? 0 : ss, ma->y = 0, ma->fx = ma->x + ms, ma->fy = m->wh,
-		    sa->x = ga->dir == DirHor ? ms : 0, sa->y = 0, sa->fx = sa->x + ss, sa->fy = m->wh;
+		ms = f * (m->ww - g), ss = m->ww - ms - g,
+		ma->x = ga->dir == DirHor ? 0 + m->ogappx : ss + g + m->ogappx, ma->y = 0 + m->ogappx, ma->fx = ma->x + ms - 2*m->ogappx, ma->fy = m->wh - m->ogappx,
+		sa->x = ga->dir == DirHor ? ms + g - m->ogappx : 0 + m->ogappx, sa->y = 0 + m->ogappx, sa->fx = sa->x + ss, sa->fy = m->wh - m->ogappx;
 	else
-		ms = f * m->wh, ss = m->wh - ms,
-		ma->x = 0, ma->y = ga->dir == DirVer ? 0 : ss, ma->fx = m->ww, ma->fy = ma->y + ms,
-		    sa->x = 0, sa->y = ga->dir == DirVer ? ms : 0, sa->fx = m->ww, sa->fy = sa->y + ss;
+		ms = f * (m->wh - g), ss = m->wh - ms - g,
+		ma->x = 0 + m->ogappx, ma->y = ga->dir == DirVer ? 0 + m->ogappx : ss + g + m->ogappx, ma->fx = m->ww - m->ogappx, ma->fy = ma->y + ms - 2*m->ogappx,
+		sa->x = 0 + m->ogappx, sa->y = ga->dir == DirVer ? ms + g - m->ogappx : 0 + m->ogappx, sa->fx = m->ww - m->ogappx, sa->fy = sa->y + ss;
 	/* tile clients */
 	for (c = nexttiled(m->clients), i = 0; i < n; c = nexttiled(c->next), i++)
 	{
 		a = ma->n > 0 ? ma : sa;
 		f = i == 0 || ma->n == 0 ? a->fact : 1, f /= --a->n + f;
-		w = (a->dir == DirVer ? 1 : f) * (a->fx - a->x);
-		h = (a->dir == DirHor ? 1 : f) * (a->fy - a->y);
-		resize(c, m->wx + a->x, m->wy + a->y, w - 2 * c->bw, h - 2 * c->bw, False);
-		a->x += a->dir == DirHor ? w : 0;
-		a->y += a->dir == DirVer ? h : 0;
+		w = a->dir == DirVer ? a->fx - a->x : f * (a->fx - a->x - a->n * m->igappx);
+		h = a->dir == DirHor ? a->fy - a->y : f * (a->fy - a->y - a->n * m->igappx);;
+		resize(c, m->wx + a->x, m->wy + a->y, w - 2 * c->bw, h - 2 * c->bw, 0);
+		a->x += a->dir == DirHor ? w + m->igappx : 0;
+		a->y += a->dir == DirVer ? h + m->igappx : 0;
 	}
 }
 
