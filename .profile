@@ -31,3 +31,5 @@ fi
 setxkbmap -option caps:ctrl_modifier
 
 feh --bg-scale --randomize ~/.wallpaper/*
+
+compton -b &
