@@ -40,10 +40,9 @@ static const Rule rules[] =
 static const int dirs[3]      = { DirHor, DirVer, DirVer }; /* tiling dirs */
 static const float facts[3]   = { 1.1,    1.1,    1.1 };    /* tiling facts */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
-#include "tatami.c"
 static const Layout layouts[] =
 {
 	/* symbol     arrange function */
@@ -91,20 +90,22 @@ static Key keys[] =
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_y,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	TILEKEYS(MODKEY,                                           1, 0, 0)
 	TILEKEYS(MODKEY | ShiftMask,                                 0, 1, 0)
 	TILEKEYS(MODKEY | ControlMask,                               0, 0, 1)
 	TILEKEYS(MODKEY | ShiftMask | ControlMask,                     1, 1, 1)
 	{
-		MODKEY | ShiftMask,             XK_t,      setdirs,        {.v = (int[])
+		MODKEY | ShiftMask,             XK_t,      setdirs,        {
+			.v = (int[])
 			{
 				DirHor, DirVer, DirVer
 			}
 		}
 	},
-	{ MODKEY | ControlMask,           XK_t,      setdirs,        {.v = (int[])
+	{
+		MODKEY | ControlMask,           XK_t,      setdirs,        {
+			.v = (int[])
 			{
 				DirVer, DirHor, DirHor
 			}
