@@ -74,12 +74,22 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char * dmenucmd[] = { "rofi", "-show", "run", "-theme", "pinky", NULL };
 static const char * termcmd[]  = { "alacritty", NULL };
 static const char * rofisshcmd[]  = { "rofi", "-show", "ssh", "-theme", "pinky", NULL };
+static const char * set_out_eDP1[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "eDP-1", NULL };
+static const char * set_out_DP_1_8[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "DP-1-8", NULL };
+static const char * lock[]  = { "slock", NULL };
+static const char * suspend[]  = { "systemctl", "suspend", NULL };
+static const char * hibernate[]  = { "systemctl", "hibernate", NULL };
 
 static Key keys[] =
 {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_s,      spawn,          {.v = rofisshcmd } },
+	{ MODKEY | ShiftMask,           XK_z,      spawn,          {.v = set_out_eDP1 } },
+	{ MODKEY | ShiftMask,           XK_x,      spawn,          {.v = set_out_DP_1_8 } },
+	{ MODKEY | ShiftMask,           XK_l,      spawn,          {.v = lock } },
+	{ MODKEY | ShiftMask,           XK_s,      spawn,          {.v = suspend } },
+	{ MODKEY | ShiftMask,           XK_h,      spawn,          {.v = hibernate } },
 	{ MODKEY | ShiftMask,           XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
