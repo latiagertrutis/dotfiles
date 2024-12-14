@@ -38,3 +38,9 @@ family = "mononoki"
 [window]
 decorations = "none"
 opacity = 0.97
+
+[keyboard]
+bindings = [
+{ key = "W", mods = "Alt", action = "Copy" },
+{ key = "Y", mods = "Control", action = "Paste" },
+]
