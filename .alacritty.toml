@@ -1,0 +1,40 @@
+[colors.bright]
+black = "#6f6f6f"
+blue = "#7cb8bb"
+cyan = "#93e0e3"
+green = "#5f7f5f"
+magenta = "#dc8cc3"
+red = "#dca3a3"
+white = "#ffffff"
+yellow = "#e0cf9f"
+
+[colors.cursor]
+cursor = "#dcdccc"
+text = "#383838"
+
+[colors.normal]
+black = "#383838"
+blue = "#7cb8bb"
+cyan = "#93e0e3"
+green = "#5f7f5f"
+magenta = "#dc8cc3"
+red = "#dca3a3"
+white = "#dcdccc"
+yellow = "#e0cf9f"
+
+[colors.primary]
+background = "#383838"
+foreground = "#dcdccc"
+
+[cursor]
+style = "Beam"
+
+[font]
+size = 14
+
+[font.normal]
+family = "mononoki"
+
+[window]
+decorations = "none"
+opacity = 0.97

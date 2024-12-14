@@ -33,3 +33,5 @@ setxkbmap -option caps:ctrl_modifier
 feh --bg-scale --randomize ~/.wallpaper/*
 
 compton -b &
+
+export PATH="$PATH:$HOME/.cargo/bin"
