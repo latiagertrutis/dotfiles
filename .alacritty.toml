@@ -43,4 +43,8 @@ opacity = 0.97
 bindings = [
 { key = "W", mods = "Alt", action = "Copy" },
 { key = "Y", mods = "Control", action = "Paste" },
+# Delete a word, search fo the backward-kill-word in https://www.gnu.org/software
+# /bash/manual/html_node/Commands-For-Killing.html. Then with show the combiantion
+# scape sequence with `showkey -a`
+{ key= "Back", mods= "Control", chars= "\u001b[3;2~" },
 ]
