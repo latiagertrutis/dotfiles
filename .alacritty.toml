@@ -26,8 +26,11 @@ yellow = "#e0cf9f"
 background = "#383838"
 foreground = "#dcdccc"
 
+[selection]
+save_to_clipboard = true
+
 [cursor]
-style = "Beam"
+style = {shape = "Beam", blinking = "On"}
 
 [font]
 size = 14
@@ -41,10 +44,11 @@ opacity = 0.97
 
 [keyboard]
 bindings = [
-{ key = "W", mods = "Alt", action = "Copy" },
+# { key = "W", mods = "Alt", action = "Copy" },
 { key = "Y", mods = "Control", action = "Paste" },
-# Delete a word, search fo the backward-kill-word in https://www.gnu.org/software
-# /bash/manual/html_node/Commands-For-Killing.html. Then with show the combiantion
-# scape sequence with `showkey -a`
-{ key= "Back", mods= "Control", chars= "\u001b[3;2~" },
+{ key= "Back", mods= "Control", chars= "\u001b[3;2~" }, # Delete word
 ]
+
+# [shell]
+# program = "/usr/bin/tmux"
+# args = ["new-session"]

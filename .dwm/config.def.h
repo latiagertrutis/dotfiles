@@ -72,25 +72,47 @@ static const Layout layouts[] =
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char * dmenucmd[] = { "rofi", "-show", "run", "-theme", "pinky", NULL };
-static const char * termcmd[]  = { "alacritty", NULL };
-static const char * rofisshcmd[]  = { "rofi", "-show", "ssh", "-theme", "pinky", NULL };
+static const char * rofi_window[] = { "rofi", "-show", "window", "-theme", "pinky", NULL };
+static const char * screenshot[]  = { "gnome-screenshot", "-i", NULL };
 static const char * set_out_eDP1[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "eDP-1", NULL };
 static const char * set_out_DP_1_8[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "DP-1-8", NULL };
 static const char * lock[]  = { "slock", NULL };
 static const char * suspend[]  = { "systemctl", "suspend", NULL };
 static const char * hibernate[]  = { "systemctl", "hibernate", NULL };
+static const char * termcmd[]  = { "alacritty", NULL };
+static const char * termcmd_w1[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "1", NULL };
+static const char * termcmd_w2[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "2", NULL };
+static const char * termcmd_w3[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "3", NULL };
+static const char * termcmd_w4[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "4", NULL };
+static const char * termcmd_w5[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "5", NULL };
+static const char * termcmd_w6[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "6", NULL };
+static const char * termcmd_w7[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "7", NULL };
+static const char * termcmd_w8[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "8", NULL };
+static const char * termcmd_w9[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "9", NULL };
+static const char * termcmd_w10[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "10", NULL };
 
 static Key keys[] =
 {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_s,      spawn,          {.v = rofisshcmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = rofi_window } },
+	{ MODKEY,                       XK_s,      spawn,          {.v = screenshot } },
 	{ MODKEY | ShiftMask,           XK_z,      spawn,          {.v = set_out_eDP1 } },
 	{ MODKEY | ShiftMask,           XK_x,      spawn,          {.v = set_out_DP_1_8 } },
 	{ MODKEY | ShiftMask,           XK_l,      spawn,          {.v = lock } },
 	{ MODKEY | ShiftMask,           XK_s,      spawn,          {.v = suspend } },
 	{ MODKEY | ShiftMask,           XK_h,      spawn,          {.v = hibernate } },
 	{ MODKEY | ShiftMask,           XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_F1, spawn,              {.v = termcmd_w1 } },
+	{ MODKEY,                       XK_F2, spawn,              {.v = termcmd_w2 } },
+	{ MODKEY,                       XK_F3, spawn,              {.v = termcmd_w3 } },
+	{ MODKEY,                       XK_F4, spawn,              {.v = termcmd_w4 } },
+	{ MODKEY,                       XK_F5, spawn,              {.v = termcmd_w5 } },
+	{ MODKEY,                       XK_F6, spawn,              {.v = termcmd_w6 } },
+	{ MODKEY,                       XK_F7, spawn,              {.v = termcmd_w7 } },
+	{ MODKEY,                       XK_F8, spawn,              {.v = termcmd_w8 } },
+	{ MODKEY,                       XK_F9, spawn,              {.v = termcmd_w9 } },
+	{ MODKEY,                       XK_F10, spawn,              {.v = termcmd_w10 } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
