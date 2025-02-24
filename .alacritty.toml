@@ -48,7 +48,3 @@ bindings = [
 { key = "Y", mods = "Control", action = "Paste" },
 { key= "Back", mods= "Control", chars= "\u001b[3;2~" }, # Delete word
 ]
-
-# [shell]
-# program = "/usr/bin/tmux"
-# args = ["new-session"]
