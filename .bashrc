@@ -1,3 +1,6 @@
+# NOTE: In arch install blesh-git otherwise will not work
+[[ $- == *i* ]] && source /usr/share/blesh/ble.sh --noattach
+
 # Enable the subsequent settings only in interactive sessions
 case $- in
   *i*) ;;
@@ -144,4 +147,4 @@ source "$OSH"/oh-my-bash.sh
 # alias bashconfig="mate ~/.bashrc"
 # alias ohmybash="mate ~/.oh-my-bash"
 
-source ~/.local/share/blesh/ble.sh
+[[ ! ${BLE_VERSION-} ]] || ble-attach
