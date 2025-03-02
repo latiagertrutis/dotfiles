@@ -26,12 +26,14 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "$HOME/.cargo/bin" ] ; then
+    PATH="$HOME/.cargo/bin:$PATH"
+fi
+
 ~/.dwm-bar/dwm_bar.sh &
 
 setxkbmap -option caps:ctrl_modifier
 
 feh --bg-scale --randomize ~/.wallpaper/*
 
-compton -b &
-
-export PATH="$PATH:$HOME/.cargo/bin"
+picom -b &
