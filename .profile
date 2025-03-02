@@ -49,4 +49,6 @@ setxkbmap -option caps:ctrl_modifier
 
 feh --bg-scale --randomize ~/.wallpaper/*
 
+export GTK_THEME=Nordic-darker
+
 picom -b &

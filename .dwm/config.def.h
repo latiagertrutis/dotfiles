@@ -11,12 +11,12 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char * fonts[]          = { "mononoki:size=12" };
 static const char dmenufont[]       = "mononoki:size=12";
-static const char col_norm_border[]      = "#733543";
+static const char col_norm_border[]      = "#3B4252";
 static const char col_norm_foreground[]  = "#FFFFED";
-static const char col_norm_background[]  = "#853530";
-static const char col_sel_border[]      = "#B8546C";
+static const char col_norm_background[]  = "#2E3440";
+static const char col_sel_border[]      = "#4C566A";
 static const char col_sel_foreground[]  = "#FFFFED";
-static const char col_sel_background[]  = "#C44F47";
+static const char col_sel_background[]  = "#434C5E";
 static const char * colors[][3]      =
 {
 	/*               fg         bg         border   */
@@ -71,8 +71,8 @@ static const Layout layouts[] =
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char * dmenucmd[] = { "rofi", "-show", "run", "-theme", "pinky", NULL };
-static const char * rofi_window[] = { "rofi", "-show", "window", "-theme", "pinky", NULL };
+static const char * dmenucmd[] = { "rofi", "-show", "run", "-theme", "nord", NULL };
+static const char * rofi_window[] = { "rofi", "-show", "window", "-theme", "nord", NULL };
 static const char * screenshot[]  = { "gnome-screenshot", "-i", NULL };
 static const char * set_out_eDP1[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "eDP-1", NULL };
 static const char * set_out_DP_1_8[]  = { "/home/mateorodriguez/.dwm/set_output_screen.sh", "DP-1-8", NULL };
