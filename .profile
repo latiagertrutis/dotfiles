@@ -19,6 +19,7 @@
 
 ##################################################################################################################################
 
+# NOTE: To customize the gtk theme use lxappearance
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
