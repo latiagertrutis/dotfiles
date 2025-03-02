@@ -8,6 +8,18 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+##################################################################################################################################
+# This is needed on non-desktop environments to start dbus:									 #
+# https://wiki.archlinux.org/title/GNOME/Keyring#Using_gnome-keyring-daemon_outside_desktop_environments_(KDE,_GNOME,_XFCE,_...) #
+##################################################################################################################################
+
+# dbus-update-activation-environment --all
+
+# gnome-keyring-daemon --start --components=secrets
+
+##################################################################################################################################
+
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
