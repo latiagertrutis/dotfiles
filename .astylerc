@@ -1,0 +1,35 @@
+# astyle -n -r "benchmark/*.h,*.cpp" "src/*.h,*.cpp" "tests/*.h,*.cpp" "tools/*.h,*.cpp" "examples/*.h,*.cpp"
+
+# brace style
+--style=linux
+
+# tab
+--attach-namespaces
+--attach-extern-c
+--attach-closing-while
+
+# indentation
+--indent-preproc-define
+--indent-col1-comments
+--min-conditional-indent=0
+--max-continuation-indent=120
+
+# padding
+--pad-oper
+--pad-comma
+--pad-header
+--align-pointer=name
+--align-reference=name
+
+# formatting
+--break-closing-braces
+--add-braces
+--attach-return-type
+--attach-return-type-decl
+--keep-one-line-blocks
+--keep-one-line-statements
+--max-code-length=100
+--mode=c
+
+# other
+--lineend=linux
