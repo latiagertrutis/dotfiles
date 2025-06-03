@@ -97,7 +97,8 @@ completions=(
 # Example format: aliases=(vagrant composer git-avh)
 # Add wisely, as too many aliases slow down shell startup.
 aliases=(
-  general
+    custom
+    general
 )
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
