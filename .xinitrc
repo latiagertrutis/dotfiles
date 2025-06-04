@@ -33,6 +33,9 @@ feh --bg-scale --randomize ~/.wallpaper/*
 
 picom -b &
 
+/usr/bin/emacs --bg-daemon=emacs_w1
+/usr/bin/emacs --no-desktop --bg-daemon=emacs_w2
+
 export GTK_THEME=Nordic-darker
 
 exec dwm
