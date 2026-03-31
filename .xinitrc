@@ -25,6 +25,10 @@ if [ -d "$HOME/.cargo/bin" ] ; then
     PATH="$HOME/.cargo/bin:$PATH"
 fi
 
+if [ -d "/usr/lib/rustup/bin" ] ; then
+    PATH="/usr/lib/rustup/bin:$PATH"
+fi
+
 ~/.dwm-bar/dwm_bar.sh &
 
 setxkbmap -option caps:ctrl_modifier
@@ -32,9 +36,6 @@ setxkbmap -option caps:ctrl_modifier
 feh --bg-scale --randomize ~/.wallpaper/*
 
 picom -b &
-
-/usr/bin/emacs --bg-daemon=emacs_w1
-/usr/bin/emacs --no-desktop --bg-daemon=emacs_w2
 
 export GTK_THEME=Nordic-darker
 

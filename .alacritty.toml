@@ -85,7 +85,7 @@ save_to_clipboard = true
 style = {shape = "Beam", blinking = "On"}
 
 [font]
-size = 14
+size = 12
 
 [font.normal]
 family = "mononoki"
