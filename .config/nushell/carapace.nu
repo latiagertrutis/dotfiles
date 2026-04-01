@@ -1,4 +1,6 @@
-def carapace-print-columns [name,row] {    
+def column-exists [name, row] {$name in ($row | columns)}
+
+def carapace-print-columns [name, row] {    
     if $name in ($row | columns) {
        $row | get $name
     } else {
@@ -6,17 +8,17 @@ def carapace-print-columns [name,row] {
     }
 }
 
-def carapace-print-columns-with-color [name,row] {
-    let color = (if style in ($row | columns) {
-    	(ansi ($row | get style | get fg))
+def carapace-print-columns-with-color [name, row] {
+    let color = (if (column-exists style $row) and (column-exists fg $row.style) {
+    	ansi $row.style.fg
     } else {
-    	(ansi red)
+    	ansi green
     })
     
     if $name in ($row | columns) {
        $"($color)($row | get $name)(ansi reset)"
     } else {
-       $"($color)($name) not found(ansi reset)"
+       ""
     }
 }
 
@@ -43,8 +45,16 @@ let carapace_completer = {|spans|
     $spans | skip 1 | prepend ($spans.0)
   })
 
+  let carpace_format = { |row|
+      (carapace-print-columns display $row | fill --alignment l --width 30) + (carapace-print-columns-with-color description $row | fill --alignment l --width 100)
+  }
+
   carapace $spans.0 nushell ...$spans
-  | from json | each {|row| (carapace-print-columns display $row | fill --alignment l --width 30) + ('-- ' + (carapace-print-columns-with-color description $row) | fill --alignment l --width 100)} | to text | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 | lines
+  | from json
+  | each $carpace_format
+  | to text
+  | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 --height=~40% --border
+  | lines
 }
 
 mut current = (($env | default {} config).config | default {} completions)

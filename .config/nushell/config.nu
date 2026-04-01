@@ -91,7 +91,4 @@ $env.config = {
 }
 
 source $"($nu.default-config-dir)/carapace.nu"
-
-zoxide init nushell | save -f ~/.zoxide.nu
-
-source ~/.zoxide.nu
+source $"($nu.default-config-dir)/zoxide.nu"
