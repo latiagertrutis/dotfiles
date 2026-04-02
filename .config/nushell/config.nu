@@ -37,7 +37,8 @@ $env.config = {
             | str join (char -i 0)
             | fzf --scheme=history
               --read0
-              --height=40%
+	      --border
+              --height=~40%
               --bind=ctrl-r:toggle-sort
               --highlight-line
               --query=(commandline | str substring 0..(commandline get-cursor))
@@ -58,7 +59,8 @@ $env.config = {
           cmd: "commandline edit --insert (
             fzf --scheme=path
               --read0
-              --height=40%
+	      --border
+              --height=~40%
               --reverse
               --walker=file,dir,follow,hidden
               -m
@@ -79,7 +81,8 @@ $env.config = {
           cmd: "z (
             fzf --scheme=path
               --read0
-              --height=40%
+	      --border
+              --height=~40%
               --reverse
               --walker=dir,follow,hidden
               +m

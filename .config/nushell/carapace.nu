@@ -39,7 +39,7 @@ let carapace_completer = {|spans|
   | from json
   | each $carpace_format
   | to text
-  | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 --height=~40% --border
+  | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 --height=~40% --border --reverse
   | lines
 }
 
