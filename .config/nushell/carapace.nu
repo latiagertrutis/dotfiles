@@ -1,25 +1,11 @@
-def column-exists [name, row] {$name in ($row | columns)}
-
 def carapace-print-columns [name, row] {    
-    if $name in ($row | columns) {
-       $row | get $name
-    } else {
-       $"($name) not found"
-    }
+       $row | get -o $name | default ""
 }
 
 def carapace-print-columns-with-color [name, row] {
-    let color = (if (column-exists style $row) and (column-exists fg $row.style) {
-    	ansi $row.style.fg
-    } else {
-    	ansi green
-    })
+    let color = (ansi ($row | get -o style | get -o fg | default green))
     
-    if $name in ($row | columns) {
-       $"($color)($row | get $name)(ansi reset)"
-    } else {
-       ""
-    }
+    $"($color)($row | get -o $name)(ansi reset)"
 }
 
 $env.PATH = ($env.PATH | split row (char esep) | where { $in != "/home/mateo/.config/carapace/bin" } | prepend "/home/mateo/.config/carapace/bin")
