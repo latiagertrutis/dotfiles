@@ -78,15 +78,7 @@ $env.config = {
       event: [
         {
           send: ExecuteHostCommand
-          cmd: "z (
-            fzf --scheme=path
-              --read0
-	      --border
-              --height=~40%
-              --reverse
-              --walker=dir,follow,hidden
-              +m
-          )"
+          cmd: "zi"
         }
       ]
     }
