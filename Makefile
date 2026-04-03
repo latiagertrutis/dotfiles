@@ -1,5 +1,7 @@
 ROOT = .
 
+all: install
+
 define module_import_template =
 $(1)-import:
 	@if ! test -d $$(HOME)/$(1); then \
