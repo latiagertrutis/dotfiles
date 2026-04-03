@@ -1,19 +1,5 @@
 ROOT = .
 
-define module_install_template =
-$(1)-install:
-	@if test -d $$(HOME)/$(1); then \
-		echo "ERROR: Module $$(HOME)/$(1) already exists, call:"; \
-		echo -e "\tmake $(1)-rm\tto remove it and try again."; \
-		echo -e "\tmake $(1)-reset\tto reset to the dotfiles version."; \
-		exit 1; \
-	else \
-		mkdir -p $$(HOME)/$$(dir $(1)); \
-		echo "COPY: $$(ROOT)/$(1) -> $$(HOME)/$(1)"; \
-		cp -r $(ROOT)/$(1) $(HOME)/$(1); \
-	fi
-endef
-
 define module_import_template =
 $(1)-import:
 	@if ! test -d $$(HOME)/$(1); then \
@@ -31,7 +17,7 @@ endef
 
 define module_reset_template =
 $(1)-reset: $(1)-rm
-	@$(MAKE) $(1)-install
+	@$(MAKE) install
 endef
 
 EXCLUDE = $(addsuffix %,$(addprefix $(ROOT)/,Makefile README.md .git))
@@ -49,14 +35,12 @@ import:
 	cp -f $$file $$(echo $$file | sed "s,$(HOME),$(ROOT),g"); \
 	done
 
-install:
-	@for file in $(FILES_HOME); do \
-	mkdir -p $$(dirname $$file); \
-	echo "COPY: $$(echo $$file | sed "s,$(HOME),$(ROOT),g") -> $$file"; \
-	cp -f $$(echo $$file | sed "s,$(HOME),$(ROOT),g") $$file; \
-	done
+$(HOME)/%: $(ROOT)/%
+	@mkdir -p $(dir $@)
+	cp -f $< $@
 
-$(foreach module,$(MODULES),$(eval $(call module_install_template,$(module))))
+install: $(FILES_HOME)
+
 $(foreach module,$(MODULES),$(eval $(call module_import_template,$(module))))
 $(foreach module,$(MODULES),$(eval $(call module_rm_template,$(module))))
 $(foreach module,$(MODULES),$(eval $(call module_reset_template,$(module))))
