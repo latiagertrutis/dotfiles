@@ -2,10 +2,10 @@
 
 /* appearance */
 static const int vertpad            = 3;       /* vertical padding of bar */
-static const int sidepad            = 3;       /* horizontal padding of bar */
-static const unsigned int	borderpx			  = 3;	/* border pixel of windows */
-static const unsigned int	igappx				  = 3;	/* size of inner gaps */
-static const unsigned int	ogappx				  = 3;	/* size of outer gaps */
+static const int sidepad            = 7;       /* horizontal padding of bar */
+static const unsigned int	borderpx			  = 0;	/* border pixel of windows */
+static const unsigned int	igappx				  = 7;	/* size of inner gaps */
+static const unsigned int	ogappx				  = 7;	/* size of outer gaps */
 static const int			gapsforone			  = 1;	/* 1 enable gaps when only one window is open */
 static const unsigned int	snap				  = 32;	/* snap pixel */
 static const int			swallowfloating		  =

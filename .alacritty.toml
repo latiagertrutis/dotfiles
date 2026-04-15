@@ -85,14 +85,14 @@ save_to_clipboard = true
 style = {shape = "Beam", blinking = "On"}
 
 [font]
-size = 12
+size = 13
 
 [font.normal]
 family = "mononoki"
 
 [window]
 decorations = "none"
-opacity = 0.97
+opacity = 0.99
 
 [keyboard]
 bindings = [
