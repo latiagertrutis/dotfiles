@@ -35,12 +35,15 @@ let carapace_completer = {|spans|
       (carapace-print-columns display $row | fill --alignment l --width 30) + (carapace-print-columns-with-color description $row | fill --alignment l --width 100)
   }
 
-  carapace $spans.0 nushell ...$spans
-  | from json
-  | each $carpace_format
-  | to text
-  | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 --height=~40% --border --reverse
-  | lines
+  let carapace_results = (carapace $spans.0 nushell ...$spans | from json)
+
+  if ($carapace_results | is-not-empty) {
+     $carapace_results
+     | each $carpace_format
+     | to text
+     | fzf --ansi --delimiter " " --accept-nth 1 --nth 1 --height=~40% --border --reverse
+     | lines
+  }
 }
 
 mut current = (($env | default {} config).config | default {} completions)
