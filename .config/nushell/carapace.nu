@@ -32,7 +32,7 @@ let carapace_completer = {|spans|
   })
 
   let carpace_format = { |row|
-      (carapace-print-columns display $row | fill --alignment l --width 30) + (carapace-print-columns-with-color description $row | fill --alignment l --width 100)
+      (carapace-print-columns value $row | fill --alignment l --width 30) + (carapace-print-columns-with-color description $row | fill --alignment l --width 100)
   }
 
   let carapace_results = (carapace $spans.0 nushell ...$spans | from json)
