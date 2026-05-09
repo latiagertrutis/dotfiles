@@ -56,17 +56,28 @@ $env.config = {
       event: [
         {
           send: ExecuteHostCommand
-          cmd: "commandline edit --insert (
+          cmd: "let last_elem = (commandline | split row  ' ' | last);
+	  let base_path = (if '/' in $last_elem {($last_elem | path expand --strict)} else {'.'});
+	  let result = (
             fzf --scheme=path
               --read0
 	      --border
               --height=~40%
               --reverse
               --walker=file,dir,follow,hidden
+	      --walker-root=($base_path)
               -m
-            | lines 
-            | str join ' '
-          )"
+            | complete
+          );
+	  if ($result.exit_code == 0) {
+	     commandline edit (commandline
+				| split row ' '
+				| drop
+				| append ($last_elem + ($result.stdout
+							| str trim
+							| path relative-to $base_path))
+				| str join ' ')
+	  }"
         }
       ]
     }
