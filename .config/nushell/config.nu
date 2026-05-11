@@ -56,8 +56,13 @@ $env.config = {
       event: [
         {
           send: ExecuteHostCommand
-          cmd: "let last_elem = (commandline | split row  ' ' | last);
-	  let base_path = (if '/' in $last_elem {($last_elem | path expand --strict)} else {'.'});
+          cmd: "let last_elem = (let buff = (commandline | split row  ' ');
+	       	    	      	     if ($buff | length) == 1 or '/' not-in ($buff | last) {
+				     	'./'
+				     } else {
+				       ($buff | last)
+				     });
+	  let base_path = ($last_elem | path expand --strict);
 	  let result = (
             fzf --scheme=path
               --read0
