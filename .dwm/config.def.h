@@ -79,17 +79,6 @@ static const char *suspend[]  = { "systemctl", "suspend", NULL };
 static const char *hibernate[]  = { "systemctl", "hibernate", NULL };
 static const char *brightness_up[]  = { "brightnessctl", "s", "+10%", NULL };
 static const char *brightness_down[]  = { "brightnessctl", "s", "10%-", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
-static const char *termcmd_w1[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "1", NULL };
-static const char *termcmd_w2[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "2", NULL };
-static const char *termcmd_w3[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "3", NULL };
-static const char *termcmd_w4[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "4", NULL };
-static const char *termcmd_w5[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "5", NULL };
-static const char *termcmd_w6[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "6", NULL };
-static const char *termcmd_w7[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "7", NULL };
-static const char *termcmd_w8[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "8", NULL };
-static const char *termcmd_w9[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "9", NULL };
-static const char *termcmd_w10[]  = { "alacritty", "-e", "tmux", "new-session", "-A", "-t", "10", NULL };
 
 static Key keys[] = {
     /* modifier                     key        function        argument */
@@ -103,17 +92,7 @@ static Key keys[] = {
     { MODKEY | ShiftMask,           XK_h,      spawn,          {.v = hibernate } },
     { MODKEY,                       XK_Right,  spawn,          {.v = brightness_up } },
     { MODKEY,                       XK_Left,   spawn,          {.v = brightness_down } },
-    { MODKEY | ShiftMask,           XK_Return, spawn,          {.v = termcmd } },
-    { MODKEY,                       XK_F1, spawn,              {.v = termcmd_w1 } },
-    { MODKEY,                       XK_F2, spawn,              {.v = termcmd_w2 } },
-    { MODKEY,                       XK_F3, spawn,              {.v = termcmd_w3 } },
-    { MODKEY,                       XK_F4, spawn,              {.v = termcmd_w4 } },
-    { MODKEY,                       XK_F5, spawn,              {.v = termcmd_w5 } },
-    { MODKEY,                       XK_F6, spawn,              {.v = termcmd_w6 } },
-    { MODKEY,                       XK_F7, spawn,              {.v = termcmd_w7 } },
-    { MODKEY,                       XK_F8, spawn,              {.v = termcmd_w8 } },
-    { MODKEY,                       XK_F9, spawn,              {.v = termcmd_w9 } },
-    { MODKEY,                       XK_F10, spawn,              {.v = termcmd_w10 } },
+    { MODKEY | ShiftMask,           XK_Return, spawn,          SHCMD("alacritty -e bash ~/.dwm/sesh.sh") },
     { MODKEY,                       XK_b,      togglebar,      {0} },
     { MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
     { MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -180,7 +159,6 @@ static Button buttons[] = {
     { ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
     { ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
     { ClkWinTitle,          0,              Button2,        zoom,           {0} },
-    { ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
     { ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
     { ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
     { ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
