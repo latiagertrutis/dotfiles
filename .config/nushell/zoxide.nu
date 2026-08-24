@@ -31,7 +31,7 @@ export-env {
 #
 
 # Jump to a directory using only keywords.
-def --env --wrapped __zoxide_z [...rest: string] {
+export def --env --wrapped __zoxide_z [...rest: directory] {
   let path = match $rest {
     [] => {'~'},
     [ '-' ] => {'-'},
@@ -44,50 +44,17 @@ def --env --wrapped __zoxide_z [...rest: string] {
 }
 
 # Jump to a directory using interactive search.
-def --env --wrapped __zoxide_zi [...rest:string] {
+export def --env --wrapped __zoxide_zi [...rest: string] {
   cd $'(^zoxide query --interactive -- ...$rest | str trim -r -c "\n")'
 }
 
-
-def "nu-complete zoxide path" [context: string] {
-    let parts = $context | str trim --left | split row " " | skip 1 | each { str downcase }
-    let completions = (
-        ^zoxide query --list --exclude $env.PWD -- ...$parts
-            | lines
-            | each { |dir|
-                if ($parts | length) <= 1 {
-                    $dir
-                } else {
-                    let dir_lower = $dir | str downcase
-                    let rem_start = $parts | drop 1 | reduce --fold 0 { |part, rem_start|
-                        ($dir_lower | str index-of --range $rem_start.. $part) + ($part | str length)
-                    }
-                    {
-                        value: ($dir | str substring $rem_start..),
-                        description: $dir
-                    }
-                }
-            })
-    {
-        options: {
-            sort: false,
-            completion_algorithm: substring,
-            case_sensitive: false,
-        },
-        completions: $completions,
-    }
-}
-
-def --env --wrapped z [...rest: string@"nu-complete zoxide path"] {
-  __zoxide_z ...$rest
-}
 # =============================================================================
 #
 # Commands for zoxide. Disable these using --no-cmd.
 #
 
-alias z = __zoxide_z
-alias zi = __zoxide_zi
+export alias z = __zoxide_z
+export alias zi = __zoxide_zi
 
 # =============================================================================
 #
