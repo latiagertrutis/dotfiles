@@ -19,17 +19,16 @@
 
 alias l = ls -a
 
-$env.config = {
-  keybindings: [
+let custom_keybindings = [
     {
-      name: fuzzy_history
-      modifier: control
-      keycode: char_r
-      mode: [emacs, vi_normal, vi_insert]
-      event: [
-        {
-          send: ExecuteHostCommand
-          cmd: "let result = (
+        name: fuzzy_history
+        modifier: control
+        keycode: char_r
+        mode: [emacs, vi_normal, vi_insert]
+        event: [
+            {
+                send: ExecuteHostCommand
+                cmd: "let result = (
             history
             | get command
             | uniq
@@ -45,18 +44,18 @@ $env.config = {
               +m
             | complete
           ); if ($result.exit_code == 0) { commandline edit ($result.stdout | str trim) }"
-        }
-      ]
+            }
+        ]
     }
     {
-      name: fuzzy_file_dir_completion
-      modifier: control
-      keycode: char_t
-      mode: [emacs, vi_normal, vi_insert]
-      event: [
-        {
-          send: ExecuteHostCommand
-          cmd: "let last_elem = (let buff = (commandline | split row  ' ');
+        name: fuzzy_file_dir_completion
+        modifier: control
+        keycode: char_t
+        mode: [emacs, vi_normal, vi_insert]
+        event: [
+            {
+                send: ExecuteHostCommand
+                cmd: "let last_elem = (let buff = (commandline | split row  ' ');
 	       	    	      	     if ($buff | length) == 1 or '/' not-in ($buff | last) {
 				     	'./'
 				     } else {
@@ -83,23 +82,21 @@ $env.config = {
 							| path relative-to $base_path))
 				| str join ' ')
 	  }"
-        }
-      ]
+            }
+        ]
     }
     {
-      name: fuzzy_cd
-      modifier: control
-      keycode: char_z
-      mode: [emacs, vi_normal, vi_insert]
-      event: [
-        {
-          send: ExecuteHostCommand
-          cmd: "zi"
-        }
-      ]
+        name: fuzzy_cd
+        modifier: control
+        keycode: char_z
+        mode: [emacs, vi_normal, vi_insert]
+        event: [
+            {send: ExecuteHostCommand, cmd: "zi"}
+        ]
     }
-  ]
-}
+]
+
+$env.config.keybindings = $env.config.keybindings | append $custom_keybindings
 
 source $"($nu.default-config-dir)/carapace.nu"
 source $"($nu.default-config-dir)/zoxide.nu"
